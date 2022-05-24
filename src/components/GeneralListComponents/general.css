@@ -1,0 +1,40 @@
+
+.add {
+    width: 100px;
+}
+#outerBox {
+    height: 90vh;
+}
+.close-button:hover {
+    cursor: pointer;
+}
+
+@media (max-width:500px) {
+  
+    .add { margin-top: 10px; }
+    .week { margin-top: 10px; }
+
+    ._block {
+         display: block;
+         margin: 0px;
+    }
+    .dropdown-menu {
+        width: 300px;
+        text-align: center;
+    }
+    .dropdown-toggle {
+        width: 300px;
+    }
+  
+  }
+
+  @media (min-width:500px) {
+
+    ._block {
+         display: inline-block;
+         margin-left: 20px;
+         width: 100px;
+    }
+
+  
+  }
