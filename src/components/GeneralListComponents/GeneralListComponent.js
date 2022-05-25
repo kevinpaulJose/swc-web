@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Button,
+  Container,
   Dropdown,
   DropdownButton,
   Form,
@@ -20,7 +21,7 @@ class GeneralListComponent extends React.Component {
     super(props);
     this.state = {
       selected: "Group 1",
-      addModal: true,
+      addModal: false,
       addData: [],
       canAddData: true,
       addInputData: [],
@@ -298,73 +299,70 @@ class GeneralListComponent extends React.Component {
       </tr>
     );
   };
-  _renderAddNewModal = () => {
-    return (
-      <Modal show={this.state.addModal}>
-        <Modal.Header>
-          <Modal.Title>
-            <span>Add in {this.state.selected}</span>
-            {/* <CSVReaderComponent /> */}
-            <this._renderCVReader />
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Table striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>City</th>
-                <th>Phone</th>
-                <th colSpan={2}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.newData.map((value, key) => {
-                return (
-                  <this._displayInput
-                    id={value.id}
-                    name={value.name}
-                    city={value.city}
-                    phone={value.phone}
-                  />
-                );
-              })}
-              {!this.state.canAddData && <this._displayBlankInput />}
-            </tbody>
-          </Table>
-          <div>
-            <span
-              onClick={this.checkAddData}
-              className="close-button"
-              style={{
-                fontSize: 14,
-                textDecorationLine: "underline",
-                color: this.state.canAddData ? "black" : "grey",
-              }}
-            >
-              + Add
-            </span>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="outline-secondary"
-            onClick={() => this.setState({ addModal: false })}
-          >
-            Close
-          </Button>
-          <Button variant="success" onClick={() => this.saveChanges()}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  };
+
   render() {
     return (
       <div className="container   mt-4" id="outerBox">
-        <this._renderAddNewModal />
+        <Modal show={this.state.addModal}>
+          <Modal.Header>
+            <Modal.Title>
+              <span>Add in {this.state.selected}</span>
+              {/* <CSVReaderComponent /> */}
+              <this._renderCVReader />
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Table striped bordered hover size="sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>City</th>
+                  <th>Phone</th>
+                  <th colSpan={2}></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.newData.map((value, key) => {
+                  return (
+                    <this._displayInput
+                      id={value.id}
+                      name={value.name}
+                      city={value.city}
+                      phone={value.phone}
+                    />
+                  );
+                })}
+                {!this.state.canAddData && <this._displayBlankInput />}
+              </tbody>
+            </Table>
+            <div>
+              <span
+                onClick={this.checkAddData}
+                className="close-button"
+                style={{
+                  fontSize: 14,
+                  textDecorationLine: "underline",
+                  color: this.state.canAddData ? "black" : "grey",
+                }}
+              >
+                + Add
+              </span>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="outline-secondary"
+              onClick={() => this.setState({ addModal: false })}
+            >
+              Close
+            </Button>
+            <Button variant="success" onClick={() => this.saveChanges()}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
         <div style={{ textAlign: "center", height: 40, marginTop: 20 }}>
           <div style={{ display: "inline-block" }}>
             <this._renderDropdown />
