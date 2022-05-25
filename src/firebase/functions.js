@@ -1,21 +1,16 @@
 import {
-  addDoc,
+  // addDoc,
   collection,
   doc,
   getDocs,
+  // limit,
+  orderBy,
   query,
-  Timestamp,
+  // Timestamp,
   where,
   writeBatch,
 } from "firebase/firestore";
 import { firedb } from "./config";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-  uploadString,
-} from "firebase/storage";
 
 export const getSetTime = async () => {
   const timeRef = collection(firedb, "startDate");
@@ -27,15 +22,25 @@ export const getSetTime = async () => {
   return retData;
 };
 
-export const setData = async (data) => {
-  console.log(data);
+export const getUsersByGroup = async (group) => {
+  const usersRef = collection(firedb, "users");
+  const q = query(usersRef, where("group", "==", group), orderBy("id"));
+  const querySnapshot = await getDocs(q);
+  let retData = [];
+  querySnapshot.forEach((doc) => {
+    retData.push(doc.data());
+  });
+  return retData;
+};
+
+export const setData = async (data, col) => {
+  // console.log(data);
   const batch = writeBatch(firedb);
-  //   let ref = doc(firedb, "users", "UOs7yF0lLu7KuNxSrFFZ");
   let ref = [];
   data.forEach((value, index) => {
     const tempRef = doc(
       firedb,
-      "users",
+      col,
       new Date().getTime().toString() + index.toString()
     );
     ref.push(tempRef);
@@ -46,6 +51,76 @@ export const setData = async (data) => {
   });
   try {
     await batch.commit();
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const removeData = async (data, group, col) => {
+  await setData(data, col);
+  const batch = writeBatch(firedb);
+  const id = [];
+  data.forEach((value, index) => {
+    id.push(value.id);
+  });
+  const usersRef = collection(firedb, "users");
+
+  let arrays = [],
+    size = 10;
+
+  while (id.length > 0) arrays.push(id.splice(0, size));
+  for (const item of arrays) {
+    const q = query(
+      usersRef,
+      where("group", "==", group),
+      where("id", "in", item)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((docs) => {
+      const tempRef = doc(firedb, "users", docs.id);
+      console.log(docs.id);
+      batch.delete(tempRef);
+    });
+  }
+  try {
+    await batch.commit();
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const updateData = async (data, group) => {
+  const batch = writeBatch(firedb);
+  const id = [];
+  data.forEach((value, index) => {
+    id.push(value.id);
+  });
+  const usersRef = collection(firedb, "users");
+
+  let arrays = [],
+    size = 10;
+
+  while (id.length > 0) arrays.push(id.splice(0, size));
+  console.log(arrays);
+  for (const item of arrays) {
+    const q = query(
+      usersRef,
+      where("group", "==", group),
+      where("id", "in", item)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((docs) => {
+      const tempRef = doc(firedb, "users", docs.id);
+      console.log(docs.id);
+      batch.update(tempRef, data.filter((v) => v.id === docs.data().id)[0]);
+    });
+  }
+  try {
+    await batch.commit().catch((e) => {
+      return false;
+    });
     return true;
   } catch (e) {
     return false;

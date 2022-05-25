@@ -8,6 +8,34 @@
 .close-button:hover {
     cursor: pointer;
 }
+.search {
+        height: 36px;
+}
+input{
+    text-align:center;
+   border-color: grey;
+   border-radius: 5px;
+ }
+
+ .stickyComp {
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    overflow-y: auto;
+    margin-left: 100px;
+    margin-top: 30px;
+ }
+
+ /* .stickyComp1 {
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    overflow-y: auto;
+ } */
+ input[type=file] { width: 50%; margin-bottom: 10px; }
+
 
 @media (max-width:500px) {
   
@@ -17,6 +45,7 @@
     ._block {
          display: block;
          margin: 0px;
+
     }
     .dropdown-menu {
         width: 300px;
@@ -24,6 +53,21 @@
     }
     .dropdown-toggle {
         width: 300px;
+    }
+    .mainDataOverflow {
+        /* margin-top: 160px; */
+        height: 60%;
+    }
+    .toggleBtn {
+        margin-top: 160px;
+        margin-left: 10px;
+    }
+    .search {
+        margin-top: 10px;
+        width: 77%;
+    }
+    .modalDataOverflow {
+        max-height: 50vh;
     }
   
   }
@@ -35,6 +79,21 @@
          margin-left: 20px;
          width: 100px;
     }
+    .mainDataOverflow {
+        /* margin-top: 80px; */
+        height: 80%;
+    }
+    .toggleBtn { 
+        margin-top: 80px;
+        margin-left: 30px;
+    }
+    .modalDataOverflow {
+        max-height: 50vh;
+    }
+    .add {
+        margin-left: 90px;
+    }
+
 
   
   }
