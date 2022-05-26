@@ -1,0 +1,29 @@
+
+.searchs {
+    height: 36px;
+}
+
+ input[type=file] { width: 50%; margin-bottom: 10px; }
+
+
+@media (max-width:500px) {
+  
+    .searchs {
+        margin-top: 10px;
+        width: 77%;
+    }
+
+  
+  }
+
+  @media (min-width:500px) {
+
+
+    .searchs {
+        width: 100px;
+        margin-left: 90px;
+    }
+
+
+  
+  }

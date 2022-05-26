@@ -1,4 +1,3 @@
-
 .add {
     width: 100px;
 }
@@ -80,7 +79,7 @@ input{
          width: 100px;
     }
     .mainDataOverflow {
-        /* margin-top: 80px; */
+        /* margin-top: -80px; */
         height: 80%;
     }
     .toggleBtn { 

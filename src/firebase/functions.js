@@ -6,6 +6,7 @@ import {
   // limit,
   orderBy,
   query,
+  setDoc,
   // Timestamp,
   where,
   writeBatch,
@@ -25,6 +26,27 @@ export const getSetTime = async () => {
 export const getUsersByGroup = async (group) => {
   const usersRef = collection(firedb, "users");
   const q = query(usersRef, where("group", "==", group), orderBy("id"));
+  const querySnapshot = await getDocs(q);
+  let retData = [];
+  querySnapshot.forEach((doc) => {
+    retData.push(doc.data());
+  });
+  return retData;
+};
+export const getUsersById = async (id) => {
+  const usersRef = collection(firedb, "users");
+  const q = query(usersRef, where("id", "==", parseInt(id)));
+  const querySnapshot = await getDocs(q);
+  let retData = [];
+  querySnapshot.forEach((doc) => {
+    retData.push(doc.data());
+  });
+  return retData;
+};
+
+export const getPriceByWeek = async (week) => {
+  const pricesRef = collection(firedb, "prices");
+  const q = query(pricesRef, where("week", "==", week));
   const querySnapshot = await getDocs(q);
   let retData = [];
   querySnapshot.forEach((doc) => {
@@ -57,6 +79,29 @@ export const setData = async (data, col) => {
   }
 };
 
+export const setPrice = async (col, priceData, priceId) => {
+  await setDoc(doc(firedb, col, new Date().getTime().toString()), priceData);
+  const batch = writeBatch(firedb);
+
+  const usersRef = collection(firedb, "users");
+
+  const q = query(usersRef, where("id", "==", priceId));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((docs) => {
+    const tempRef = doc(firedb, "users", docs.id);
+    // console.log(docs.id);
+    batch.delete(tempRef);
+  });
+
+  try {
+    await batch.commit();
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 export const removeData = async (data, group, col) => {
   await setData(data, col);
   const batch = writeBatch(firedb);
@@ -79,7 +124,7 @@ export const removeData = async (data, group, col) => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((docs) => {
       const tempRef = doc(firedb, "users", docs.id);
-      console.log(docs.id);
+      // console.log(docs.id);
       batch.delete(tempRef);
     });
   }

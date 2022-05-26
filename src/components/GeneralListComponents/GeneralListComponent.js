@@ -16,8 +16,9 @@ import {
   updateData,
 } from "../../firebase/functions";
 import Papa from "papaparse";
-import "./general.css";
+
 import { Dots } from "loading-animations-react";
+import "./general.css";
 
 // import "react-dropdown/style.css";
 
@@ -77,13 +78,22 @@ class GeneralListComponent extends React.Component {
     const actualTime = date2 - date1;
     const actualDiffDays = Math.ceil(actualTime / (1000 * 60 * 60 * 24));
     // alert(actualDiffDays);
-    if (actualDiffDays > 1) {
+    // alert(actualDiffDays);
+    if (actualDiffDays >= 7) {
       this.setState({ canAdd: false });
     }
-    this.setState({
-      currentWeek: Math.ceil(diffDays / 7),
-      selectedWeek: "Week " + Math.ceil(diffDays / 7).toString(),
-    });
+    const actualWeek = Math.ceil(actualDiffDays / 7);
+    if (actualWeek <= 0) {
+      this.setState({
+        currentWeek: 1,
+        selectedWeek: "Week 1",
+      });
+    } else {
+      this.setState({
+        currentWeek: Math.ceil(diffDays / 7),
+        selectedWeek: "Week " + Math.ceil(diffDays / 7).toString(),
+      });
+    }
   };
 
   triggerAddData = () => {
