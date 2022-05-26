@@ -14,8 +14,8 @@ export default function RouterComponent() {
             <img
               alt=""
               src={require("../assets/logo.png")}
-              width="40"
-              height="40"
+              width="80"
+              height="80"
               className="d-inline-block align-top"
             />{" "}
             {/* SWRC Traders */}
