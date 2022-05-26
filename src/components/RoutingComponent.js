@@ -5,7 +5,7 @@ import GeneralListComponent from "./GeneralListComponents/GeneralListComponent";
 import PricesComponent from "./PricesComponents/PricesComponent";
 
 export default function RouterComponent() {
-  let path = window.location.href.includes("prices");
+  let path = window.location.href.includes("prizes");
   return (
     <>
       <Navbar bg="light" variant="light">
@@ -26,15 +26,15 @@ export default function RouterComponent() {
               <Nav.Link href="/" style={{ color: path ? "" : "green" }}>
                 Home
               </Nav.Link>
-              <Nav.Link href="/prices" style={{ color: path ? "green" : "" }}>
-                Prices
+              <Nav.Link href="/prizes" style={{ color: path ? "green" : "" }}>
+                Prizes
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
       <Routes>
-        <Route path="/prices" element={<PricesComponent />} />
+        <Route path="/prizes" element={<PricesComponent />} />
         <Route path="/users" element={<Users />} />
         <Route path="/" element={<GeneralListComponent />} />
       </Routes>
