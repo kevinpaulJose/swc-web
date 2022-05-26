@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Nav,
-  Navbar,
-  NavDropdown,
-  Offcanvas,
-} from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import GeneralListComponent from "./GeneralListComponents/GeneralListComponent";
 import PricesComponent from "./PricesComponents/PricesComponent";
@@ -46,10 +40,6 @@ export default function RouterComponent() {
       </Routes>
     </>
   );
-}
-
-function About() {
-  return <h2>About</h2>;
 }
 
 function Users() {
